@@ -67,7 +67,6 @@ pub extern crate bitcoinconsensus;
 #[cfg(feature = "hashbrown")]
 #[cfg_attr(docsrs, doc(cfg(feature = "hashbrown")))]
 pub extern crate hashbrown;
-pub extern crate secp256k1;
 
 #[cfg(feature = "serde")]
 #[macro_use]
@@ -83,25 +82,21 @@ mod serde_utils;
 
 #[macro_use]
 pub mod network;
-pub mod address;
 pub mod amount;
 pub mod base58;
 pub mod bip152;
 pub mod bip158;
-pub mod bip32;
+
 pub mod blockdata;
 pub mod consensus;
 // Private until we either make this a crate or flatten it - still to be decided.
-pub(crate) mod crypto;
 pub mod error;
 pub mod hash_types;
 pub mod merkle_tree;
 pub mod policy;
 pub mod pow;
-pub mod psbt;
-pub mod sign_message;
+
 pub mod string;
-pub mod taproot;
 pub mod util;
 
 // May depend on crate features and we don't want to bother with it
@@ -117,7 +112,6 @@ use core2::error::Error as StdError;
 #[cfg(not(feature = "std"))]
 use core2::io;
 
-pub use crate::address::{Address, AddressType};
 pub use crate::amount::{Amount, Denomination, SignedAmount};
 pub use crate::blockdata::block::{self, Block};
 pub use crate::blockdata::fee_rate::FeeRate;
@@ -128,8 +122,6 @@ pub use crate::blockdata::weight::Weight;
 pub use crate::blockdata::witness::{self, Witness};
 pub use crate::blockdata::{constants, opcodes};
 pub use crate::consensus::encode::VarInt;
-pub use crate::crypto::key::{self, PrivateKey, PublicKey};
-pub use crate::crypto::{ecdsa, sighash};
 pub use crate::error::Error;
 pub use crate::hash_types::{
     BlockHash, PubkeyHash, ScriptHash, Txid, WPubkeyHash, WScriptHash, Wtxid,

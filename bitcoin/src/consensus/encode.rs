@@ -27,7 +27,6 @@ use crate::hash_types::{BlockHash, FilterHash, TxMerkleNode, FilterHeader};
 use crate::io::{self, Cursor, Read};
 
 use crate::bip152::{ShortId, PrefilledTransaction};
-use crate::taproot::TapLeafHash;
 
 use crate::blockdata::transaction::{TxOut, Transaction, TxIn};
 #[cfg(feature = "std")]
@@ -597,7 +596,6 @@ impl_vec!(TxOut);
 impl_vec!(TxIn);
 impl_vec!(Vec<u8>);
 impl_vec!(u64);
-impl_vec!(TapLeafHash);
 impl_vec!(VarInt);
 impl_vec!(ShortId);
 impl_vec!(PrefilledTransaction);
@@ -786,18 +784,6 @@ impl Encodable for sha256::Hash {
 }
 
 impl Decodable for sha256::Hash {
-    fn consensus_decode<R: io::Read + ?Sized>(r: &mut R) -> Result<Self, Error> {
-        Ok(Self::from_byte_array(<<Self as Hash>::Bytes>::consensus_decode(r)?))
-    }
-}
-
-impl Encodable for TapLeafHash {
-    fn consensus_encode<W: io::Write + ?Sized>(&self, w: &mut W) -> Result<usize, io::Error> {
-        self.as_byte_array().consensus_encode(w)
-    }
-}
-
-impl Decodable for TapLeafHash {
     fn consensus_decode<R: io::Read + ?Sized>(r: &mut R) -> Result<Self, Error> {
         Ok(Self::from_byte_array(<<Self as Hash>::Bytes>::consensus_decode(r)?))
     }
